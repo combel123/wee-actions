@@ -56,9 +56,9 @@ jobs:
         else
           echo "SOURCE_REPO=Rohail33/Realking_kernel_sm8250" >> $GITHUB_ENV
           echo "BRANCH_NAME=base" >> $GITHUB_ENV
-          if [ ${{ inputs.DEVICE_CODE }} = alioth ] ; then
-            echo "DEVICE_NAME=Alioth" >> $GITHUB_ENV
-            echo "DEF_CONFIG=alioth_defconfig" >> $GITHUB_ENV
+          if [ ${{ inputs.DEVICE_CODE }} = umi ] ; then
+            echo "DEVICE_NAME=Umi" >> $GITHUB_ENV
+            echo "DEF_CONFIG=umi_defconfig" >> $GITHUB_ENV
           elif [ ${{ inputs.DEVICE_CODE }} = munch ] ; then
             echo "DEVICE_NAME=Munch" >> $GITHUB_ENV
             echo "DEF_CONFIG=munch_defconfig" >> $GITHUB_ENV
@@ -94,7 +94,7 @@ jobs:
       if: ${{ inputs.USE_KERNELSU }} == true
       run: |
         cd android-kernel
-        curl -LSs "https://raw.githubusercontent.com/tiann/KernelSU/main/kernel/setup.sh" | bash -s "${{ github.event.inputs.KERNELSU_TAG }}"
+        curl -LSs "https://raw.githubusercontent.com/tiann/KernelSU/main/kernel/setup.sh" | bash -s "${{ inputs.KERNELSU_TAG }}"
         #wget -q "https://raw.githubusercontent.com/WeeAris/RK-KSU-AOSP-Daily-Build/main/0001-readd-ksu-support-patch.patch" -O KernelSU.patch
         #git apply ./KernelSU.patch
     
