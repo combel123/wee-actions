@@ -36,7 +36,7 @@ jobs:
         if [ ${{ inputs.IS_RELEASE }} = true ] ; then
           echo "SOURCE_REPO=WeeAris/Realking_imm_kernel_sm8250" >> $GITHUB_ENV
           
-          if [ ${{ inputs.DEVICE_CODE }} = alioth ] ; then
+          if [ ${{ inputs.DEVICE_CODE }} = umi ] ; then
             echo "BRANCH_NAME=base" >> $GITHUB_ENV
             echo "DEVICE_NAME=Umi" >> $GITHUB_ENV
             echo "DEF_CONFIG=umi-stock_defconfig" >> $GITHUB_ENV
