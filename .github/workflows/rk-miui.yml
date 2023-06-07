@@ -146,7 +146,7 @@ jobs:
         KBUILD_COMPILER_STRING="$(clang --version | head -n 1 | perl -pe 's/\(http.*?\)//gs' | sed -e 's/  */ /g' -e 's/[[:space:]]*$//')"
         KBUILD_BUILD_HOST=GitHub-Action
         KBUILD_BUILD_USER=$(echo ${{ github.actor }} | tr A-Z a-z)
-        make -j$(nproc --all) O=out CC=clang ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- umi_defconfig
+        make -j$(nproc --all) oldconfig CC=clang ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- umi_defconfig
         make -j$(nproc --all) O=out CC=clang ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- NM=llvm-nm OBJDUMP=llvm-objdump STRIP=llvm-strip
   
     - name: ZIP Kernel
