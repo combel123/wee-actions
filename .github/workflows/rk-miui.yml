@@ -39,7 +39,7 @@ jobs:
           if [ ${{ inputs.DEVICE_CODE }} = umi ] ; then
             echo "BRANCH_NAME=base" >> $GITHUB_ENV
             echo "DEVICE_NAME=Umi" >> $GITHUB_ENV
-            echo "DEF_CONFIG=umi_defconfig" >> $GITHUB_ENV
+            echo "DEF_CONFIG=umi-stock_defconfig" >> $GITHUB_ENV
           elif [ ${{ inputs.DEVICE_CODE }} = munch ] ; then
             echo "BRANCH_NAME=base" >> $GITHUB_ENV
             echo "DEVICE_NAME=Munch" >> $GITHUB_ENV
@@ -54,7 +54,7 @@ jobs:
           echo "BRANCH_NAME=base" >> $GITHUB_ENV
           if [ ${{ inputs.DEVICE_CODE }} = umi ] ; then
             echo "DEVICE_NAME=Umi" >> $GITHUB_ENV
-            echo "DEF_CONFIG=umi_defconfig" >> $GITHUB_ENV
+            echo "DEF_CONFIG=umi-stock_defconfig" >> $GITHUB_ENV
           elif [ ${{ inputs.DEVICE_CODE }} = munch ] ; then
             echo "DEVICE_NAME=Munch" >> $GITHUB_ENV
             echo "DEF_CONFIG=munch_defconfig" >> $GITHUB_ENV
