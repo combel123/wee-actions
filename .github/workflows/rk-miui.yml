@@ -17,19 +17,15 @@ on:
         default: true
         type: boolean
       CLANG_ARGS:
-        required: false
+        #required: false
+        required: true
         default: 'NM=llvm-nm LLVM=1 LLVM_IAS=1'
         type: string
       USE_CACHE:
         required: false
         type: boolean
         default: true
-      KERNELSU_TAG:
-          description: 'Choose KernelSU branch or tag'
-          required: true
-          default: 'main'
-          type: string
-        
+  
 jobs:
   build:
     name: MIUI ${{ inputs.DEVICE_CODE }}
@@ -40,25 +36,25 @@ jobs:
         if [ ${{ inputs.IS_RELEASE }} = true ] ; then
           echo "SOURCE_REPO=WeeAris/Realking_imm_kernel_sm8250" >> $GITHUB_ENV
           
-          if [ ${{ inputs.DEVICE_CODE }} = umi ] ; then
-            echo "BRANCH_NAME=base_stock" >> $GITHUB_ENV
+          if [ ${{ inputs.DEVICE_CODE }} = alioth ] ; then
+            echo "BRANCH_NAME=base" >> $GITHUB_ENV
             echo "DEVICE_NAME=Umi" >> $GITHUB_ENV
-            echo "DEF_CONFIG=umi_defconfig" >> $GITHUB_ENV
+            echo "DEF_CONFIG=umi-stock_defconfig" >> $GITHUB_ENV
           elif [ ${{ inputs.DEVICE_CODE }} = munch ] ; then
-            echo "BRANCH_NAME=base_stock" >> $GITHUB_ENV
+            echo "BRANCH_NAME=base" >> $GITHUB_ENV
             echo "DEVICE_NAME=Munch" >> $GITHUB_ENV
             echo "DEF_CONFIG=munch_defconfig" >> $GITHUB_ENV
           elif [ ${{ inputs.DEVICE_CODE }} = apollo ] ; then
-            echo "BRANCH_NAME=base_stock" >> $GITHUB_ENV
+            echo "BRANCH_NAME=base" >> $GITHUB_ENV
             echo "DEVICE_NAME=Apollo" >> $GITHUB_ENV
             echo "DEF_CONFIG=apollo_defconfig" >> $GITHUB_ENV
           fi
         else
           echo "SOURCE_REPO=Rohail33/Realking_kernel_sm8250" >> $GITHUB_ENV
-          echo "BRANCH_NAME=base_stock" >> $GITHUB_ENV
-          if [ ${{ inputs.DEVICE_CODE }} = umi ] ; then
-            echo "DEVICE_NAME=Umi" >> $GITHUB_ENV
-            echo "DEF_CONFIG=umi_defconfig" >> $GITHUB_ENV
+          echo "BRANCH_NAME=base" >> $GITHUB_ENV
+          if [ ${{ inputs.DEVICE_CODE }} = alioth ] ; then
+            echo "DEVICE_NAME=Alioth" >> $GITHUB_ENV
+            echo "DEF_CONFIG=alioth_defconfig" >> $GITHUB_ENV
           elif [ ${{ inputs.DEVICE_CODE }} = munch ] ; then
             echo "DEVICE_NAME=Munch" >> $GITHUB_ENV
             echo "DEF_CONFIG=munch_defconfig" >> $GITHUB_ENV
@@ -94,9 +90,10 @@ jobs:
       if: ${{ inputs.USE_KERNELSU }} == true
       run: |
         cd android-kernel
-        curl -LSs "https://raw.githubusercontent.com/tiann/KernelSU/main/kernel/setup.sh" | bash -
-        #wget -q "https://raw.githubusercontent.com/WeeAris/RK-KSU-AOSP-Daily-Build/main/0001-readd-ksu-support-patch.patch" -O KernelSU.patch
-        #git apply ./KernelSU.patch
+        rm -rf KernelSU
+        rm -rf drivers/kernelsu
+        #curl -LSs "https://raw.githubusercontent.com/tiann/KernelSU/main/kernel/setup.sh" | bash -
+        curl -LSs "https://raw.githubusercontent.com/tiann/KernelSU/main/kernel/setup.sh" | bash -s v0.6.0
     
     - name: Generate Kernel Configuration
       run: |
@@ -158,6 +155,7 @@ jobs:
         TIME=$(TZ=Asia/Shanghai date "+%Y%m%d%H%M")
         mkdir -p tmp
         cp -fp ${{ env.ZIMAGE_DIR }}/Image.gz tmp
+        cp -fp ${{ env.ZIMAGE_DIR }}/Image tmp
         cp -fp ${{ env.ZIMAGE_DIR }}/dtbo.img tmp
         cp -fp ${{ env.ZIMAGE_DIR }}/dtb tmp
         
@@ -188,4 +186,3 @@ jobs:
 
     
           
-
