@@ -18,7 +18,7 @@ on:
         type: boolean
       CLANG_ARGS:
         #required: false
-        required: true
+        required: false
         default: 'NM=llvm-nm LLVM=1 LLVM_IAS=1'
         type: string
       USE_CACHE:
@@ -39,7 +39,7 @@ jobs:
           if [ ${{ inputs.DEVICE_CODE }} = umi ] ; then
             echo "BRANCH_NAME=base" >> $GITHUB_ENV
             echo "DEVICE_NAME=Umi" >> $GITHUB_ENV
-            echo "DEF_CONFIG=umi-stock_defconfig" >> $GITHUB_ENV
+            echo "DEF_CONFIG=umi_defconfig" >> $GITHUB_ENV
           elif [ ${{ inputs.DEVICE_CODE }} = munch ] ; then
             echo "BRANCH_NAME=base" >> $GITHUB_ENV
             echo "DEVICE_NAME=Munch" >> $GITHUB_ENV
@@ -52,9 +52,9 @@ jobs:
         else
           echo "SOURCE_REPO=Rohail33/Realking_kernel_sm8250" >> $GITHUB_ENV
           echo "BRANCH_NAME=base" >> $GITHUB_ENV
-          if [ ${{ inputs.DEVICE_CODE }} = alioth ] ; then
-            echo "DEVICE_NAME=Alioth" >> $GITHUB_ENV
-            echo "DEF_CONFIG=alioth_defconfig" >> $GITHUB_ENV
+          if [ ${{ inputs.DEVICE_CODE }} = umi ] ; then
+            echo "DEVICE_NAME=Umi" >> $GITHUB_ENV
+            echo "DEF_CONFIG=umi_defconfig" >> $GITHUB_ENV
           elif [ ${{ inputs.DEVICE_CODE }} = munch ] ; then
             echo "DEVICE_NAME=Munch" >> $GITHUB_ENV
             echo "DEF_CONFIG=munch_defconfig" >> $GITHUB_ENV
